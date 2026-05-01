@@ -21,7 +21,7 @@ jobs:
 
       - name: Run Python Script
         run: |
-          python update_sales.py
+          update_sales.py.txt
 
       - name: Commit
         run: |

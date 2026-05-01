@@ -14,40 +14,14 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Generate sales.json
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Run Python Script
         run: |
-          cat > sales.json <<EOF
-          {
-            "updated": "$(date +%F)",
-            "fx": {
-              "USD_TWD": 32.4
-            },
-            "sales": [
-              {
-                "program": "Alaska",
-                "bonus": "60%",
-                "min_buy": 20000,
-                "usd_cost": 591.25,
-                "fee": 0.015,
-                "twd_cost": 19450,
-                "received": 32000,
-                "cpp": 0.608,
-                "end": "2026-05-30"
-              },
-              {
-                "program": "IHG",
-                "bonus": "100%",
-                "min_buy": 26000,
-                "usd_cost": 260,
-                "fee": 0.015,
-                "twd_cost": 8564,
-                "received": 52000,
-                "cpp": 0.164,
-                "end": "2026-05-25"
-              }
-            ]
-          }
-          EOF
+          python update_sales.py
 
       - name: Commit
         run: |

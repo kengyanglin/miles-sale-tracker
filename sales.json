@@ -25,28 +25,6 @@
       "received": 52000,
       "cpp": 0.161,
       "end": "2026-05-25"
-    },
-    {
-      "program": "FlyingBlue",
-      "bonus": "80%",
-      "min_buy": 24000,
-      "usd_cost": 660,
-      "fee": 0.015,
-      "twd_cost": 21192,
-      "received": 43200,
-      "cpp": 0.491,
-      "end": "2026-05-28"
-    },
-    {
-      "program": "Choice",
-      "bonus": "40%",
-      "min_buy": 8000,
-      "usd_cost": 88,
-      "fee": 0.015,
-      "twd_cost": 2826,
-      "received": 11200,
-      "cpp": 0.252,
-      "end": "2026-05-20"
     }
   ]
 }

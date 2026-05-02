@@ -13,159 +13,95 @@ usd_twd = fx["rates"]["TWD"]
 
 fee = 0.015
 
-def fetch_alaska():
+def fetch_blog_sales():
 
-    url = "https://storefront.points.com/mileage-plan/en-US/buy"
+    url = "https://frequentmiler.com/tag/buy-miles-points/"
+
+    sales = []
 
     try:
 
         r = requests.get(url, timeout=20)
 
-        text = r.text
+        soup = BeautifulSoup(r.text, "html.parser")
 
-        bonus_match = re.search(
-            r'(\d+)%\\s*bonus',
-            text,
-            re.I
-        )
+        text = soup.get_text(" ", strip=True)
 
-        if bonus_match:
-            bonus = bonus_match.group(1) + "%"
-        else:
-            bonus = "Unknown"
+        programs = [
+            ("Alaska", r"Alaska.*?(\d+)%"),
+            ("IHG", r"IHG.*?(\d+)%"),
+            ("Choice", r"Choice.*?(\d+)%"),
+            ("FlyingBlue", r"Flying Blue.*?(\d+)%")
+        ]
 
-        return {
-            "program": "Alaska",
-            "bonus": bonus,
-            "min_buy": 20000,
-            "usd_cost": 591.25,
-            "received": 32000,
-            "end": "Check Website"
-        }
+        for name, pattern in programs:
 
-    except Exception as e:
+            match = re.search(pattern, text, re.I)
 
-        print("Alaska error", e)
+            if match:
+                bonus = match.group(1) + "%"
+            else:
+                bonus = "Unknown"
 
-        return None
-def fetch_ihg():
-    url = "https://storefront.points.com/ihg-rewards/en-US/buy"
+            sales.append({
+                "program": name,
+                "bonus": bonus
+            })
 
-    try:
-        r = requests.get(url, timeout=20)
-        text = r.text
-
-        bonus_match = re.search(r'(\d+)%\s*bonus', text, re.I)
-
-        if bonus_match:
-            bonus = bonus_match.group(1) + "%"
-        else:
-            bonus = "Unknown"
-
-        return {
-            "program": "IHG",
-            "bonus": bonus,
-            "min_buy": 26000,
-            "usd_cost": 260,
-            "received": 52000,
-            "end": "Check Website"
-        }
+        return sales
 
     except Exception as e:
-        print("IHG error", e)
-        return None
 
-def fetch_flyingblue():
-    url = "https://storefront.points.com/flyingblue/en-US/buy"
+        print("Blog fetch error", e)
 
-    try:
-        r = requests.get(url, timeout=20)
-        text = r.text
-
-        bonus_match = re.search(r'(\d+)%\s*bonus', text, re.I)
-
-        if bonus_match:
-            bonus = bonus_match.group(1) + "%"
-        else:
-            bonus = "Unknown"
-
-        return {
-            "program": "FlyingBlue",
-            "bonus": bonus,
-            "min_buy": 24000,
-            "usd_cost": 660,
-            "received": 43200,
-            "end": "Check Website"
-        }
-
-    except Exception as e:
-        print("FlyingBlue error", e)
-        return None
-
-def fetch_choice():
-    url = "https://storefront.points.com/choice-privileges/en-US/buy"
-
-    try:
-        r = requests.get(url, timeout=20)
-        text = r.text
-
-        bonus_match = re.search(r'(\d+)%\s*bonus', text, re.I)
-
-        if bonus_match:
-            bonus = bonus_match.group(1) + "%"
-        else:
-            bonus = "Unknown"
-
-        return {
-            "program": "Choice",
-            "bonus": bonus,
-            "min_buy": 8000,
-            "usd_cost": 88,
-            "received": 11200,
-            "end": "Check Website"
-        }
-
-    except Exception as e:
-        print("Choice error", e)
-        return None
+        return []
 
 sales = []
-programs = [
-    fetch_alaska(),
-    fetch_ihg(),
-    fetch_flyingblue(),
-    fetch_choice()
-]
 
-for p in programs:
+blog_sales = fetch_blog_sales()
 
-    if not p:
-        continue
+defaults = {
+    "Alaska": {
+        "min_buy": 20000,
+        "usd_cost": 591.25,
+        "received": 32000
+    },
+    "IHG": {
+        "min_buy": 26000,
+        "usd_cost": 260,
+        "received": 52000
+    },
+    "FlyingBlue": {
+        "min_buy": 24000,
+        "usd_cost": 660,
+        "received": 43200
+    },
+    "Choice": {
+        "min_buy": 8000,
+        "usd_cost": 88,
+        "received": 11200
+    }
+}
 
-    twd_cost = p["usd_cost"] * usd_twd * (1 + fee)
-    cpp = round(twd_cost / p["received"], 3)
+for p in blog_sales:
+
+    d = defaults[p["program"]]
+
+    twd_cost = d["usd_cost"] * usd_twd * (1 + fee)
+
+    cpp = round(
+        twd_cost / d["received"],
+        3
+    )
 
     sales.append({
         "program": p["program"],
         "bonus": p["bonus"],
-        "min_buy": p["min_buy"],
-        "usd_cost": p["usd_cost"],
+        "min_buy": d["min_buy"],
+        "usd_cost": d["usd_cost"],
         "fee": fee,
         "twd_cost": round(twd_cost),
-        "received": p["received"],
+        "received": d["received"],
         "cpp": cpp,
-        "end": p["end"]
+        "end": "Check Blog"
     })
-
-data = {
-    "updated": str(date.today()),
-    "fx": {
-        "USD_TWD": round(usd_twd, 2)
-    },
-    "sales": sales
-}
-
-with open("sales.json", "w") as f:
-    json.dump(data, f, indent=2)
-
-print("sales.json updated")

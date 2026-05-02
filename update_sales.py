@@ -52,6 +52,48 @@ sales.append({
     "end": "2026-05-25"
 })
 
+# Flying Blue
+bonus = "80%"
+min_buy = 24000
+usd_cost = 660
+received = 43200
+
+twd_cost = usd_cost * usd_twd * (1 + fee)
+cpp = round(twd_cost / received, 3)
+
+sales.append({
+    "program": "FlyingBlue",
+    "bonus": bonus,
+    "min_buy": min_buy,
+    "usd_cost": usd_cost,
+    "fee": fee,
+    "twd_cost": round(twd_cost),
+    "received": received,
+    "cpp": cpp,
+    "end": "2026-05-28"
+})
+
+# Choice
+bonus = "40%"
+min_buy = 8000
+usd_cost = 88
+received = 11200
+
+twd_cost = usd_cost * usd_twd * (1 + fee)
+cpp = round(twd_cost / received, 3)
+
+sales.append({
+    "program": "Choice",
+    "bonus": bonus,
+    "min_buy": min_buy,
+    "usd_cost": usd_cost,
+    "fee": fee,
+    "twd_cost": round(twd_cost),
+    "received": received,
+    "cpp": cpp,
+    "end": "2026-05-20"
+})
+
 data = {
     "updated": str(date.today()),
     "fx": {

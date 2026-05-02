@@ -21,22 +21,25 @@ def fetch_blog_sales():
 
     try:
 
-        r = requests.get(url, timeout=20)
+r = requests.get(url, timeout=20)
 
-        soup = BeautifulSoup(r.text, "html.parser")
+soup = BeautifulSoup(r.text, "html.parser")
 
-        text = soup.get_text(" ", strip=True)
+titles = " ".join([
+    h.get_text(" ", strip=True)
+    for h in soup.find_all(["h2", "h3"])
+])
 
-        programs = [
-            ("Alaska", r"Alaska.*?(\d+)%"),
-            ("IHG", r"IHG.*?(\d+)%"),
-            ("Choice", r"Choice.*?(\d+)%"),
-            ("FlyingBlue", r"Flying Blue.*?(\d+)%")
-        ]
+programs = [
+    ("Alaska", r"Alaska.*?(\d+)%"),
+    ("IHG", r"IHG.*?(\d+)%"),
+    ("Choice", r"Choice.*?(\d+)%"),
+    ("FlyingBlue", r"Flying Blue.*?(\d+)%")
+]
 
-        for name, pattern in programs:
+for name, pattern in programs:
 
-            match = re.search(pattern, text, re.I)
+    match = re.search(pattern, titles, re.I)
 
             if match:
                 bonus = match.group(1) + "%"
@@ -105,3 +108,16 @@ for p in blog_sales:
         "cpp": cpp,
         "end": "Check Blog"
     })
+
+data = {
+    "updated": str(date.today()),
+    "fx": {
+        "USD_TWD": round(usd_twd, 2)
+    },
+    "sales": sales
+}
+
+with open("sales.json", "w") as f:
+    json.dump(data, f, indent=2)
+
+print("sales.json updated")

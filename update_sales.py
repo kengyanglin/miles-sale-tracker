@@ -1,10 +1,15 @@
 import json
+import urllib.request
 from datetime import date
 
-# 模擬即時匯率
-usd_twd = 32.4
+# 即時匯率 API
+url = "https://open.er-api.com/v6/latest/USD"
 
-# 海外刷卡手續費
+response = urllib.request.urlopen(url)
+fx_data = json.loads(response.read())
+
+usd_twd = fx_data["rates"]["TWD"]
+
 fee = 0.015
 
 sales = []
@@ -50,7 +55,7 @@ sales.append({
 data = {
     "updated": str(date.today()),
     "fx": {
-        "USD_TWD": usd_twd
+        "USD_TWD": round(usd_twd, 2)
     },
     "sales": sales
 }

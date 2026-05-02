@@ -10,7 +10,7 @@
       "min_buy": 20000,
       "usd_cost": 591.25,
       "fee": 0.015,
-      "twd_cost": 19450,
+      "twd_cost": 19444,
       "received": 32000,
       "cpp": 0.608,
       "end": "2026-05-30"
@@ -21,7 +21,7 @@
       "min_buy": 26000,
       "usd_cost": 260,
       "fee": 0.015,
-      "twd_cost": 8564,
+      "twd_cost": 8550,
       "received": 52000,
       "cpp": 0.164,
       "end": "2026-05-25"

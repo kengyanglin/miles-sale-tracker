@@ -1,20 +1,21 @@
 import json
-import urllib.request
+import requests
 from datetime import date
 
-# 即時匯率 API
-url = "https://open.er-api.com/v6/latest/USD"
+# 即時匯率
+fx = requests.get(
+    "https://open.er-api.com/v6/latest/USD"
+).json()
 
-response = urllib.request.urlopen(url)
-fx_data = json.loads(response.read())
-
-usd_twd = fx_data["rates"]["TWD"]
+usd_twd = fx["rates"]["TWD"]
 
 fee = 0.015
 
 sales = []
 
-# Alaska
+# Alaska (目前示範資料)
+bonus = "60%"
+min_buy = 20000
 usd_cost = 591.25
 received = 32000
 
@@ -23,8 +24,8 @@ cpp = round(twd_cost / received, 3)
 
 sales.append({
     "program": "Alaska",
-    "bonus": "60%",
-    "min_buy": 20000,
+    "bonus": bonus,
+    "min_buy": min_buy,
     "usd_cost": usd_cost,
     "fee": fee,
     "twd_cost": round(twd_cost),
@@ -33,7 +34,9 @@ sales.append({
     "end": "2026-05-30"
 })
 
-# IHG
+# IHG (目前示範資料)
+bonus = "100%"
+min_buy = 26000
 usd_cost = 260
 received = 52000
 
@@ -42,56 +45,14 @@ cpp = round(twd_cost / received, 3)
 
 sales.append({
     "program": "IHG",
-    "bonus": "100%",
-    "min_buy": 26000,
+    "bonus": bonus,
+    "min_buy": min_buy,
     "usd_cost": usd_cost,
     "fee": fee,
     "twd_cost": round(twd_cost),
     "received": received,
     "cpp": cpp,
     "end": "2026-05-25"
-})
-
-# Flying Blue
-bonus = "80%"
-min_buy = 24000
-usd_cost = 660
-received = 43200
-
-twd_cost = usd_cost * usd_twd * (1 + fee)
-cpp = round(twd_cost / received, 3)
-
-sales.append({
-    "program": "FlyingBlue",
-    "bonus": bonus,
-    "min_buy": min_buy,
-    "usd_cost": usd_cost,
-    "fee": fee,
-    "twd_cost": round(twd_cost),
-    "received": received,
-    "cpp": cpp,
-    "end": "2026-05-28"
-})
-
-# Choice
-bonus = "40%"
-min_buy = 8000
-usd_cost = 88
-received = 11200
-
-twd_cost = usd_cost * usd_twd * (1 + fee)
-cpp = round(twd_cost / received, 3)
-
-sales.append({
-    "program": "Choice",
-    "bonus": bonus,
-    "min_buy": min_buy,
-    "usd_cost": usd_cost,
-    "fee": fee,
-    "twd_cost": round(twd_cost),
-    "received": received,
-    "cpp": cpp,
-    "end": "2026-05-20"
 })
 
 data = {

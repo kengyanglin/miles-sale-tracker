@@ -44,7 +44,7 @@ def fetch_blog_sales():
             if match:
                 bonus = match.group(1) + "%"
             else:
-                bonus = "Unknown"
+                continue
 
             sales.append({
                 "program": name,

@@ -24,7 +24,7 @@ def fetch_alaska():
         text = r.text
 
         bonus_match = re.search(
-            r'(\\d+)%\\s*bonus',
+            r'(\d+)%\\s*bonus',
             text,
             re.I
         )
@@ -156,3 +156,16 @@ for p in programs:
         "cpp": cpp,
         "end": p["end"]
     })
+
+data = {
+    "updated": str(date.today()),
+    "fx": {
+        "USD_TWD": round(usd_twd, 2)
+    },
+    "sales": sales
+}
+
+with open("sales.json", "w") as f:
+    json.dump(data, f, indent=2)
+
+print("sales.json updated")

@@ -21,25 +21,25 @@ def fetch_blog_sales():
 
     try:
 
-r = requests.get(url, timeout=20)
+        r = requests.get(url, timeout=20)
 
-soup = BeautifulSoup(r.text, "html.parser")
+        soup = BeautifulSoup(r.text, "html.parser")
 
-titles = " ".join([
-    h.get_text(" ", strip=True)
-    for h in soup.find_all(["h2", "h3"])
-])
+        titles = " ".join([
+            h.get_text(" ", strip=True)
+            for h in soup.find_all(["h2", "h3"])
+        ])
 
-programs = [
-    ("Alaska", r"Alaska.*?(\d+)%"),
-    ("IHG", r"IHG.*?(\d+)%"),
-    ("Choice", r"Choice.*?(\d+)%"),
-    ("FlyingBlue", r"Flying Blue.*?(\d+)%")
-]
+        programs = [
+            ("Alaska", r"Alaska.*?(\d+)%"),
+            ("IHG", r"IHG.*?(\d+)%"),
+            ("Choice", r"Choice.*?(\d+)%"),
+            ("FlyingBlue", r"Flying Blue.*?(\d+)%")
+        ]
 
-for name, pattern in programs:
+        for name, pattern in programs:
 
-    match = re.search(pattern, titles, re.I)
+            match = re.search(pattern, titles, re.I)
 
             if match:
                 bonus = match.group(1) + "%"

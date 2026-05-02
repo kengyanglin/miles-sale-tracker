@@ -6,25 +6,47 @@
   "sales": [
     {
       "program": "Alaska",
-      "bonus": "60%",
+      "bonus": "Unknown",
       "min_buy": 20000,
       "usd_cost": 591.25,
       "fee": 0.015,
       "twd_cost": 18984,
       "received": 32000,
       "cpp": 0.593,
-      "end": "2026-05-30"
+      "end": "Check Website"
     },
     {
       "program": "IHG",
-      "bonus": "100%",
+      "bonus": "Unknown",
       "min_buy": 26000,
       "usd_cost": 260,
       "fee": 0.015,
       "twd_cost": 8348,
       "received": 52000,
       "cpp": 0.161,
-      "end": "2026-05-25"
+      "end": "Check Website"
+    },
+    {
+      "program": "FlyingBlue",
+      "bonus": "Unknown",
+      "min_buy": 24000,
+      "usd_cost": 660,
+      "fee": 0.015,
+      "twd_cost": 21192,
+      "received": 43200,
+      "cpp": 0.491,
+      "end": "Check Website"
+    },
+    {
+      "program": "Choice",
+      "bonus": "Unknown",
+      "min_buy": 8000,
+      "usd_cost": 88,
+      "fee": 0.015,
+      "twd_cost": 2826,
+      "received": 11200,
+      "cpp": 0.252,
+      "end": "Check Website"
     }
   ]
 }

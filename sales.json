@@ -1,30 +1,7 @@
 {
-  "updated": "2026-06-30",
+  "updated": "2026-07-01",
   "fx": {
-    "USD_TWD": 31.89
+    "USD_TWD": 31.86
   },
-  "sales": [
-    {
-      "program": "IHG",
-      "bonus": "100%",
-      "min_buy": 26000,
-      "usd_cost": 260,
-      "fee": 0.015,
-      "twd_cost": 8415,
-      "received": 52000,
-      "cpp": 0.162,
-      "end": "Check Blog"
-    },
-    {
-      "program": "Choice",
-      "bonus": "150%",
-      "min_buy": 8000,
-      "usd_cost": 88,
-      "fee": 0.015,
-      "twd_cost": 2848,
-      "received": 11200,
-      "cpp": 0.254,
-      "end": "Check Blog"
-    }
-  ]
+  "sales": []
 }

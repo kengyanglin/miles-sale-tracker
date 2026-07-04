@@ -3,28 +3,5 @@
   "fx": {
     "USD_TWD": 31.96
   },
-  "sales": [
-    {
-      "program": "IHG",
-      "bonus": "100%",
-      "min_buy": 26000,
-      "usd_cost": 260,
-      "fee": 0.015,
-      "twd_cost": 8435,
-      "received": 52000,
-      "cpp": 0.162,
-      "end": "Check Blog"
-    },
-    {
-      "program": "Choice",
-      "bonus": "150%",
-      "min_buy": 8000,
-      "usd_cost": 88,
-      "fee": 0.015,
-      "twd_cost": 2855,
-      "received": 11200,
-      "cpp": 0.255,
-      "end": "Check Blog"
-    }
-  ]
+  "sales": []
 }
